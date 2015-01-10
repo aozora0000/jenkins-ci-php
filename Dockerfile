@@ -28,13 +28,14 @@ RUN source /home/worker/.phpbrew/bashrc
 RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 
 # 5.6.3
-RUN phpbrew install 5.5.20 && \
+RUN phpbrew install 5.6.4 && \
     source /home/worker/.phpbrew/bashrc && \
-    phpbrew switch 5.5.20  && \
+    phpbrew switch 5.6.4  && \
     phpbrew ext install curl && \
     phpbrew ext disable curl && \
     phpbrew ext enable curl && \
     phpbrew ext install xdebug && \
+    phpbrew ext install opcache && \
     phpbrew ext
 
 RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini  | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
