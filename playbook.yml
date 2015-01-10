@@ -1,0 +1,71 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  sudo: true
+  tasks:
+    - name: BASE,Devtoolsインストール
+      yum: name="{{ item }}" state=present
+      with_items:
+        - "@Base"
+        - "@Development tools"
+
+    - name: 基本パッケージインストール
+      yum: name={{ item }} state=latest
+      with_items:
+        - sudo
+        - readline
+        - readline-devel
+        - compat-readline5
+        - libxml2-devel
+        - libxslt-devel
+        - libyaml-devel
+        - openssl
+        - openssl-devel
+        - bzip2-devel
+        - git
+        - make
+        - autoconf
+        - automake
+        - bison
+        - libtool
+        - sysstat
+        - gettext
+        - traceroute
+        - curl
+        - wget
+
+    - name: Workerグループの作成
+      group: name=worker gid=45678
+    - name: Workerユーザーの作成
+      user: name=worker uid=45678 group=worker shell=/bin/bash createhome=yes home=/home/worker
+
+    - name: WorkSpace作成
+      file: path=/home/worker/workspace group=worker owner=worker state=directory
+
+    - name: workerユーザーsudoer追加
+      command: |
+        echo 'worker    ALL=(ALL)    NOPASSWD: ALL' > /etc/sudoers.d/worker
+
+    - name: Defaults requiretty削除
+      shell: sed -i 's/.*requiretty$/#Defaults requiretty/' /etc/sudoers
+    - name: 日本時間に設定
+      shell: |
+        echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock
+        rm -f /etc/localtime
+        ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+    - name: php-cliインストール
+      yum: name={{item}}
+      with_items:
+          - php-cli
+          - bzip2-devel
+          - re2c
+          - libmhash
+          - libicu
+          - libicu-devel
+          - libcurl
+          - curl-devel
+          - libmcrypt
+
+    - name: phpbrewインストール
+      shell: curl -L -o /usr/local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/local/bin/phpbrew
+      remote_user: worker
