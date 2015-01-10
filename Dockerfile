@@ -28,9 +28,9 @@ RUN source /home/worker/.phpbrew/bashrc
 RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 
 # 5.6.3
-RUN phpbrew install 5.6.3 && \
+RUN phpbrew install 5.3.29 && \
     source /home/worker/.phpbrew/bashrc && \
-    phpbrew switch 5.6.3  && \
+    phpbrew switch 5.3.29  && \
     phpbrew ext install curl && \
     phpbrew ext disable curl && \
     phpbrew ext enable curl && \
