@@ -31,6 +31,7 @@ RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 RUN phpbrew install 5.6.4 && \
     source /home/worker/.phpbrew/bashrc && \
     phpbrew switch 5.6.4  && \
+    phpbrew ext install iconv && \
     phpbrew ext install xdebug && \
     phpbrew ext install opcache && \
     phpbrew ext
