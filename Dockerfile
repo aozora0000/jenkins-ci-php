@@ -16,9 +16,9 @@ RUN ansible-playbook playbook.yml
 RUN chmod 777 /etc/profile.d
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer && \
-    wget https://phar.phpunit.de/phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit && \
+    wget -q https://phar.phpunit.de/phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit && \
     chmod a+x /usr/local/bin/phpunit && \
-    wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs && \
+    wget -q https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs && \
     chmod a+x /usr/local/bin/phpcs
 
 # php install
