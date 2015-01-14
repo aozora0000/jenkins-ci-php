@@ -33,7 +33,8 @@
         - traceroute
         - curl
         - wget
-
+        - mysql-devel
+        
     - name: Workerグループの作成
       group: name=worker gid=45678
     - name: Workerユーザーの作成
