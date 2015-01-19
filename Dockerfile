@@ -36,7 +36,7 @@ RUN phpbrew install 5.6.4 && \
     phpbrew ext install iconv && \
     phpbrew ext install xdebug && \
     phpbrew ext install opcache && \
-    phpbrew ext install pdo && \
+    phpbrew ext install pdo_mysql && \
     phpbrew ext
 
 RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini  | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
