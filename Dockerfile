@@ -19,7 +19,8 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
     wget -q https://phar.phpunit.de/phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit && \
     chmod a+x /usr/local/bin/phpunit && \
     wget -q https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs && \
-    chmod a+x /usr/local/bin/phpcs
+    chmod a+x /usr/local/bin/phpcs && \
+    curl -o /usr/local/bin/phing http://www.phing.info/get/phing-latest.phar && chmod a+x /usr/local/bin/phing
 
 # php install
 USER worker
