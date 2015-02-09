@@ -13,13 +13,12 @@ RUN echo "host_key_checking = False" >> /etc/ansible/ansible.cfg
 ADD ./playbook.yml /tmp/ansible/
 WORKDIR /tmp/ansible
 RUN ansible-playbook playbook.yml
-RUN chmod 777 /etc/profile.d
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && \
-    chmod a+x /usr/local/bin/composer && \
+    chmod 777 /usr/local/bin/composer && \
     wget -q https://phar.phpunit.de/phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit && \
-    chmod a+x /usr/local/bin/phpunit && \
+    chmod 777 /usr/local/bin/phpunit && \
     wget -q https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs && \
-    chmod a+x /usr/local/bin/phpcs && \
+    chmod 777 /usr/local/bin/phpcs && \
     curl -o /usr/local/bin/phing http://www.phing.info/get/phing-latest.phar && chmod a+x /usr/local/bin/phing
 
 # php install
@@ -29,7 +28,7 @@ RUN phpbrew init
 RUN source /home/worker/.phpbrew/bashrc
 RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 
-# 5.6.3
+# 5.6.4
 RUN phpbrew install 5.6.4 && \
     source /home/worker/.phpbrew/bashrc && \
     phpbrew switch 5.6.4  && \
@@ -39,7 +38,8 @@ RUN phpbrew install 5.6.4 && \
     phpbrew ext install pdo_mysql && \
     phpbrew ext
 
-RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini  | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
+RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
+RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/phar.readonly.*/phar.readonly = Off/g"
 
 #################################
 # default behavior is to login by worker user
