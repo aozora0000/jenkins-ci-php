@@ -39,7 +39,7 @@ RUN phpbrew install 5.6.4 && \
     phpbrew ext
 
 RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
-RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/phar.readonly.*/phar.readonly = Off/g"
+RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;phar.readonly.*/phar.readonly = Off/g"
 
 #################################
 # default behavior is to login by worker user
