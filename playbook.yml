@@ -69,22 +69,3 @@
         echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock
         rm -f /etc/localtime
         ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-    - name: php-cliインストール
-      yum: name={{item}}
-      with_items:
-          - php
-          - php-common
-          - php-cli
-          - bzip2-devel
-          - re2c
-          - libmhash
-          - libicu
-          - libicu-devel
-          - libcurl
-          - curl-devel
-          - libmcrypt
-          - libmcrypt-devel
-
-    - name: phpbrewインストール
-      shell: curl -L -o /usr/local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod 777 /usr/local/bin/phpbrew
-      remote_user: worker

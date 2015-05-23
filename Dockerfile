@@ -14,31 +14,36 @@ ADD ./playbook.yml /tmp/ansible/
 WORKDIR /tmp/ansible
 RUN ansible-playbook playbook.yml
 
-RUN php -v
-
 # php install
-USER worker
-WORKDIR /home/worker
+WORKDIR /tmp
 
-RUN phpbrew init
-RUN source /home/worker/.phpbrew/bashrc
-RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
+RUN export CFLAGS="-O3" && \
+    git clone --depth 1 https://github.com/php/php-src.git && \
+    cd php-src && \
+    ./buildconf && \
+    ./configure \
+        --enable-mbstring \
+        --enable-curl \
+        --enable-gd \
+        --enable-gettext \
+        --enable-mcrypt \
+        --enable-mysqli \
+        --enable-mysqlnd \
+        --enable-opcache \
+        --enable-openssl \
+        --enable-pdo_mysql \
+        --enable-pdo_sqlite \
+        --enable-phar \
+        --enable-readline \
+        --enable-simplexml \
+        --with-openssl && \
+    make -j $(nproc) && make install && make clean && \
+    rm -rf /tmp/*
 
-# PHPインストール
-RUN export PHP_VERSION=5.4.41 && \
-    source /home/worker/.bashrc && \
-    phpbrew install -j $(nproc) $PHP_VERSION +default +mysql +pdo +openssl=/usr -- --with-libdir=lib64 && \
-    source /home/worker/.bashrc && \
-    phpbrew switch $PHP_VERSION  && \
-    phpbrew ext install iconv && \
-    phpbrew ext install xdebug && \
-    phpbrew ext install gd && \
-    phpbrew ext install imagick && \
-    phpbrew install-composer && \
-    phpbrew install-phpunit
-
-RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
-RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;phar.readonly.*/phar.readonly = Off/g"
+RUN wget https://getcomposer.org/composer.phar && \
+    chmod +x composer.phar && mv composer.phar /usr/local/bin/composer && \
+    wget https://phar.phpunit.de/phpunit.phar && \
+    chmod +x phpunit.phar && mv phpunit.phar /usr/local/bin/phpunit
 
 #################################
 # default behavior is to login by worker user
