@@ -84,6 +84,7 @@
           - curl-devel
           - libmcrypt
           - libmcrypt-devel
+          - libtidy-devel
 
     - name: phpbrewインストール
       shell: curl -L -o /usr/local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod 777 /usr/local/bin/phpbrew

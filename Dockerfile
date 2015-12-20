@@ -25,7 +25,7 @@ RUN source /home/worker/.phpbrew/bashrc
 RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 
 # PHPインストール
-RUN export PHP_VERSION=5.4.41 && \
+RUN export PHP_VERSION=5.4.45 && \
     source /home/worker/.bashrc && \
     phpbrew install -j $(nproc) $PHP_VERSION +default +mysql +pdo +openssl=/usr -- --with-libdir=lib64 && \
     source /home/worker/.bashrc && \
@@ -34,9 +34,7 @@ RUN export PHP_VERSION=5.4.41 && \
     phpbrew ext install xdebug && \
     phpbrew ext install gd && \
     phpbrew ext install imagick && \
-    phpbrew ext install tidy && \
-    phpbrew install-composer && \
-    phpbrew install-phpunit
+    phpbrew ext install tidy
 
 RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tokyo/g"
 RUN ls /home/worker/.phpbrew/php/php-*/etc/php.ini | xargs sed -i "s/\;phar.readonly.*/phar.readonly = Off/g"
