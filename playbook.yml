@@ -89,3 +89,7 @@
     - name: phpbrewインストール
       shell: curl -L -o /usr/local/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod 777 /usr/local/bin/phpbrew
       remote_user: worker
+    - name: Composerインストール
+      shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - name: PHPUnitインストール
+      shell: wget https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar && sudo mv phpunit.phar /usr/local/bin/phpunit
