@@ -49,6 +49,7 @@
         - mysql-devel
         - gd-devel
         - ImageMagick-devel
+        - libtidy-devel
 
     - name: Workerグループの作成
       group: name=worker gid=45678
