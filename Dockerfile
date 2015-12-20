@@ -24,7 +24,7 @@ RUN phpbrew init
 RUN source /home/worker/.phpbrew/bashrc
 RUN echo "source /home/worker/.phpbrew/bashrc" > /home/worker/.bashrc
 
-# 5.6.9
+# 5.6.16
 RUN export PHP_VERSION=5.6.16 && \
     source /home/worker/.bashrc && \
     phpbrew install -j $(nproc) $PHP_VERSION +default +mysql +pdo +openssl=/usr -- --with-libdir=lib64 && \
