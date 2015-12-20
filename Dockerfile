@@ -35,6 +35,7 @@ RUN export PHP_VERSION=5.6.9 && \
     phpbrew ext install opcache && \
     phpbrew ext install gd && \
     phpbrew ext install imagick && \
+    phpbrew ext install tidy && \
     phpbrew install-composer && \
     phpbrew install-phpunit
 
