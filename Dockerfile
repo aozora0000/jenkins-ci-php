@@ -34,6 +34,7 @@ RUN export PHP_VERSION=5.4.41 && \
     phpbrew ext install xdebug && \
     phpbrew ext install gd && \
     phpbrew ext install imagick && \
+    phpbrew ext install tidy && \
     phpbrew install-composer && \
     phpbrew install-phpunit
 
